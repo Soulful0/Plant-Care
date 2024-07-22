@@ -8,9 +8,13 @@ const AppNavbar = () => {
 
   return (
     <>
-      <nav className="navbar" role="navigation" aria-label="main navigation">
+      <nav
+        className="navbar p-3"
+        role="navigation"
+        aria-label="main navigation"
+      >
         <div className="navbar-brand">
-          <a className="navbar-item" href="https://perenual.com/">
+          <a className="navbar-item" href="THIS NEEDS TO BE CHANGED TO HOME">
             {/* This SVG must be plant related. */}
             {/* <svg
               width="640"
@@ -51,19 +55,18 @@ const AppNavbar = () => {
 
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-start">
+            {/* LOGO SHOULD GO IN THIS BUTTONS PLACE  */}
             <a className="navbar-item">Home</a>
-
-            <a className="navbar-item">Documentation</a>
 
             <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link">More</a>
 
               <div className="navbar-dropdown">
-                <a className="navbar-item">About</a>
-                <a className="navbar-item is-selected">Jobs</a>
+                {/* <a className="navbar-item is-selected">Home</a> */}
+                <a className="navbar-item">Saved Guides</a>
                 <a className="navbar-item">Contact</a>
                 <hr className="navbar-divider" />
-                <a className="navbar-item">Report an issue</a>
+                <a className="navbar-item">Perenual</a>
               </div>
             </div>
           </div>

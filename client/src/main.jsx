@@ -5,7 +5,9 @@ import App from "./App";
 import ApolloClientProvider from "./apolloClient"; // Ensure correct path to ApolloClientProvider
 import "./App.css"; // Ensure Bulma is imported here
 
-const Home = () => <h1>Home Page</h1>;
+const Home = () => (
+  <h1 className="is-flex is-justify-content-center">Home Page</h1>
+);
 const About = () => <h1>About Page</h1>;
 
 const router = createBrowserRouter([
