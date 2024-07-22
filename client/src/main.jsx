@@ -1,11 +1,12 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import React from "react";
+import App from "./App";
+import ApolloClientProvider from "./apolloClient"; // Ensure correct path to ApolloClientProvider
+import "./App.css"; // Ensure Bulma is imported here
 
-import App from "./App.jsx";
-// import SearchBooks from "./pages/SearchBooks";
-// import SavedBooks from "./pages/SavedBooks";
-import ApolloClientProvider from "./apolloClient.jsx";
+const Home = () => <h1>Home Page</h1>;
+const About = () => <h1>About Page</h1>;
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <SearchBooks />,
+        element: <Home />,
       },
       {
-        path: "/saved",
-        element: <SavedBooks />,
+        path: "/about",
+        element: <About />,
       },
     ],
   },
