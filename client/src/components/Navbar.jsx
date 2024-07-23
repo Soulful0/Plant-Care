@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import SignupForm from "./SignupForm";
+import LoginForm from "./LoginForm";
 import "../App.css"; // Import the App.css where Bulma is included
 
 const Navbar = () => {
