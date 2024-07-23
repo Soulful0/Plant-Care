@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 // import { ADD_USER } from "../graphql/mutations";
 import Auth from "../utils/auth";
 
-const SignupForm = () => {
+const SignupForm = ({ handleModalClose }) => {
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
@@ -12,7 +12,7 @@ const SignupForm = () => {
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  const [addUser, { error }] = useMutation(ADD_USER);
+  // const [addUser, { error }] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -29,11 +29,13 @@ const SignupForm = () => {
     }
 
     try {
-      const { data } = await addUser({
-        variables: { ...userFormData },
-      });
-
+      // Mock data to simulate the mutation call
+      // const { data } = await addUser({
+      //   variables: { ...userFormData },
+      // });
+      const data = { addUser: { token: "fakeToken" } }; // Replace this with real mutation call
       Auth.login(data.addUser.token);
+      handleModalClose();
     } catch (err) {
       console.error("Error:", err);
       setShowAlert(true);
@@ -48,7 +50,7 @@ const SignupForm = () => {
 
   return (
     <>
-      <form noValidate onSubmit={handleFormSubmit}>
+      <form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {showAlert && (
           <div className="notification is-danger is-light">
             <button

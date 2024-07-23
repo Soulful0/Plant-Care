@@ -4,12 +4,23 @@ import Auth from "../utils/auth";
 import SignupForm from "./SignupForm";
 import "../App.css"; // Import the App.css where Bulma is included
 
-const AppNavbar = () => {
+const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState("signup");
 
-  // const handleModalClose = () => {
-  //   setShowModal(false);
-  // };
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+  const handleSignUpClick = () => {
+    setModalContent("signup");
+    setShowModal(true);
+  };
+
+  const handleLogInClick = () => {
+    setModalContent("login");
+    setShowModal(true);
+  };
 
   return (
     <>
@@ -19,10 +30,6 @@ const AppNavbar = () => {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <Link className="navbar-item" to="/">
-            Home
-          </Link>
-
           <a
             role="button"
             className="navbar-burger"
@@ -60,13 +67,12 @@ const AppNavbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <a
-                  className="button is-primary"
-                  onClick={() => setShowModal(true)}
-                >
+                <a className="button is-primary" onClick={handleSignUpClick}>
                   <strong>Sign up</strong>
                 </a>
-                <a className="button is-light">Log in</a>
+                <a className="button is-light" onClick={handleLogInClick}>
+                  Log in
+                </a>
               </div>
             </div>
           </div>
@@ -78,7 +84,9 @@ const AppNavbar = () => {
           <div className="modal-background" onClick={handleModalClose}></div>
           <div className="modal-card">
             <header className="modal-card-head">
-              <p className="modal-card-title">Sign Up</p>
+              <p className="modal-card-title">
+                {modalContent === "signup" ? "Sign Up" : "Log In"}
+              </p>
               <button
                 className="delete"
                 aria-label="close"
@@ -86,7 +94,11 @@ const AppNavbar = () => {
               ></button>
             </header>
             <section className="modal-card-body">
-              <SignupForm handleModalClose={handleModalClose} />
+              {modalContent === "signup" ? (
+                <SignupForm handleModalClose={handleModalClose} />
+              ) : (
+                <LoginForm handleModalClose={handleModalClose} />
+              )}
             </section>
           </div>
         </div>
@@ -95,4 +107,4 @@ const AppNavbar = () => {
   );
 };
 
-export default AppNavbar;
+export default Navbar;
