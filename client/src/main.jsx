@@ -1,14 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ApolloClientProvider from "./apolloClient"; // Ensure correct path to ApolloClientProvider
 import App from "./App";
+import ApolloClientProvider from "./apolloClient"; // Ensure correct path to ApolloClientProvider
 import "./App.css"; // Ensure Bulma is imported here
 
 const Home = () => (
   <h1 className="is-flex is-justify-content-center">Home Page</h1>
 );
-const About = () => <h1>About Page</h1>;
+const About = () => (
+  <h1 className="is-flex is-justify-content-center">About Page</h1>
+);
+const Saved = () => (
+  <h1 className="is-flex is-justify-content-center">Saved Guides</h1>
+);
 
 const router = createBrowserRouter([
   {
@@ -23,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/saved",
+        element: <Saved />,
       },
     ],
   },
