@@ -1,15 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "./components/Navbar"; // Ensure correct path to Navbar component
-import "./App.css"; // Ensure Bulma is imported here
+import Navbar from "./components/Navbar";
 
-function App() {
+const App = () => {
   return (
-    <>
+    <div>
       <Navbar />
       <Outlet />
-    </>
+    </div>
   );
-}
+};
 
 export default App;

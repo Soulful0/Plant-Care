@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App";
 import ApolloClientProvider from "./apolloClient"; // Ensure correct path to ApolloClientProvider
+import App from "./App";
 import "./App.css"; // Ensure Bulma is imported here
 
 const Home = () => (
