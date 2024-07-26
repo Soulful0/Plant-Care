@@ -2,28 +2,32 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
+
 const SignupForm = ({ handleModalClose }) => {
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
   const [showAlert, setShowAlert] = useState(false);
   const [addUser, { error }] = useMutation(ADD_USER);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
+      console.log("Signup successful:", data);
       Auth.login(data.addUser.token);
       handleModalClose();
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Signup error details:", err);
       setShowAlert(true);
     }
     setUserFormData({
@@ -32,6 +36,7 @@ const SignupForm = ({ handleModalClose }) => {
       password: "",
     });
   };
+  
   return (
     <>
       <form noValidate onSubmit={handleFormSubmit}>
@@ -116,4 +121,5 @@ const SignupForm = ({ handleModalClose }) => {
     </>
   );
 };
+
 export default SignupForm;
