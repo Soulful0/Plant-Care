@@ -1,56 +1,40 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-// import { ADD_USER } from "../graphql/mutations";
+import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
-
 const SignupForm = ({ handleModalClose }) => {
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
-  // const [addUser, { error }] = useMutation(ADD_USER);
-
+  const [addUser, { error }] = useMutation(ADD_USER);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
     try {
-      // Mock data to simulate the mutation call
-      // const { data } = await addUser({
-      //   variables: { ...userFormData },
-      // });
-      const data = { addUser: { token: "fakeToken" } }; // Replace this with real mutation call
+      const { data } = await addUser({
+        variables: { ...userFormData },
+      });
       Auth.login(data.addUser.token);
       handleModalClose();
     } catch (err) {
       console.error("Error:", err);
       setShowAlert(true);
     }
-
     setUserFormData({
       username: "",
       email: "",
       password: "",
     });
   };
-
   return (
     <>
-      <form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <form noValidate onSubmit={handleFormSubmit}>
         {showAlert && (
           <div className="notification is-danger is-light">
             <button
@@ -60,7 +44,6 @@ const SignupForm = ({ handleModalClose }) => {
             Something went wrong with your signup!
           </div>
         )}
-
         <div className="field">
           <label className="label" htmlFor="username">
             Username
@@ -78,7 +61,6 @@ const SignupForm = ({ handleModalClose }) => {
           </div>
           <p className="help is-danger">Username is required!</p>
         </div>
-
         <div className="field">
           <label className="label" htmlFor="email">
             Email
@@ -96,7 +78,6 @@ const SignupForm = ({ handleModalClose }) => {
           </div>
           <p className="help is-danger">Email is required!</p>
         </div>
-
         <div className="field">
           <label className="label" htmlFor="password">
             Password
@@ -114,7 +95,6 @@ const SignupForm = ({ handleModalClose }) => {
           </div>
           <p className="help is-danger">Password is required!</p>
         </div>
-
         <div className="field">
           <div className="control">
             <button
@@ -136,5 +116,4 @@ const SignupForm = ({ handleModalClose }) => {
     </>
   );
 };
-
 export default SignupForm;
