@@ -4,29 +4,23 @@ import Auth from "../utils/auth";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import "../App.css";
-
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("signup");
-
   const handleModalClose = () => {
     setShowModal(false);
   };
-
   const handleSignUpClick = () => {
     setModalContent("signup");
     setShowModal(true);
   };
-
   const handleLogInClick = () => {
     setModalContent("login");
     setShowModal(true);
   };
-
   const handleLogOut = () => {
     Auth.logout();
   };
-
   return (
     <>
       <nav
@@ -48,7 +42,6 @@ const Navbar = () => {
             <span aria-hidden="true"></span>
           </a>
         </div>
-
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-start">
             <Link className="navbar-item" to="/">
@@ -68,7 +61,6 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
@@ -91,7 +83,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-
       {showModal && (
         <div className="modal is-active">
           <div className="modal-background" onClick={handleModalClose}></div>
@@ -119,5 +110,4 @@ const Navbar = () => {
     </>
   );
 };
-
 export default Navbar;
