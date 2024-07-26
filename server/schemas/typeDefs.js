@@ -2,45 +2,60 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type Query {
-    me: User
+    plants: [Plant]
+    species: [Species]
+    plant(id: ID!): Plant
+    speciesById(id: ID!): Species
   }
 
   type Mutation {
-    login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-    saveBook(input: SaveBookInput!): User
-    removeBook(bookId: String!): User
+    addPlant(
+      name: String!
+      species: ID!
+      age: Int
+      lastWatered: String
+      location: String
+      notes: String
+    ): Plant
+    updatePlant(
+      id: ID!
+      name: String
+      species: ID
+      age: Int
+      lastWatered: String
+      location: String
+      notes: String
+    ): Plant
+    deletePlant(id: ID!): Plant
+    addSpecies(
+      name: String!
+      description: String
+      wateringFrequency: Int
+    ): Species
+    updateSpecies(
+      id: ID!
+      name: String
+      description: String
+      wateringFrequency: Int
+    ): Species
+    deleteSpecies(id: ID!): Species
   }
 
-  type User {
+  type Plant {
     _id: ID!
-    username: String!
-    email: String!
-    bookCount: Int
-    savedBooks: [Book]
+    name: String!
+    species: Species!
+    age: Int
+    lastWatered: String
+    location: String
+    notes: String
   }
 
-  type Book {
-    bookId: String!
-    authors: [String]
+  type Species {
+    _id: ID!
+    name: String!
     description: String
-    title: String
-    image: String
-    link: String
-  }
-
-  type Auth {
-    token: String
-    user: User
-  }
-
-  input SaveBookInput {
-    bookId: String!
-    authors: [String]
-    description: String
-    title: String
-    image: String
-    link: String
+    wateringFrequency: Int
   }
 `;
 
