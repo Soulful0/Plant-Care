@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const Plant = require("../models/plants"); // Use the Plant model
 
+// NO USER MODEL INCLUDED IN THIS TEST
+
 let mongoServer;
 let server;
 let query;
