@@ -1,59 +1,46 @@
 const { AuthenticationError } = require("apollo-server-express");
-const {
-  User,
-} = require("../../../Book Search Engine/Book-Search-Engine/Develop/server/models");
-const {
-  signToken,
-} = require("../../../Book Search Engine/Book-Search-Engine/Develop/server/utils/auth");
+const Plant = require("../plants");
+const Species = require("../species");
 
 const resolvers = {
   Query: {
-    me: async (parent, args, context) => {
-      if (context.user) {
-        return User.findById(context.user._id).populate("savedBooks");
-      }
-      throw new AuthenticationError("Not logged in");
+    plants: async () => {
+      return await Plant.find().populate("species");
+    },
+    species: async () => {
+      return await Species.find();
+    },
+    plant: async (parent, { id }) => {
+      return await Plant.findById(id).populate("species");
+    },
+    speciesById: async (parent, { id }) => {
+      return await Species.findById(id);
     },
   },
   Mutation: {
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
-      if (!user) {
-        throw new AuthenticationError("Incorrect credentials");
-      }
-      const correctPw = await user.isCorrectPassword(password);
-      if (!correctPw) {
-        throw new AuthenticationError("Incorrect credentials");
-      }
-      const token = signToken(user);
-      return { token, user };
+    addPlant: async (parent, args) => {
+      const plant = await Plant.create(args);
+      return plant.populate("species");
     },
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
-      return { token, user };
+    updatePlant: async (parent, { id, ...args }) => {
+      const plant = await Plant.findByIdAndUpdate(id, args, {
+        new: true,
+      }).populate("species");
+      return plant;
     },
-    saveBook: async (parent, { input }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          context.user._id,
-          { $addToSet: { savedBooks: input } },
-          { new: true, runValidators: true }
-        ).populate("savedBooks");
-        return updatedUser;
-      }
-      throw new AuthenticationError("You need to be logged in");
+    deletePlant: async (parent, { id }) => {
+      return await Plant.findByIdAndDelete(id);
     },
-    removeBook: async (parent, { bookId }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          context.user._id,
-          { $pull: { savedBooks: { bookId } } },
-          { new: true }
-        ).populate("savedBooks");
-        return updatedUser;
-      }
-      throw new AuthenticationError("You need to be logged in");
+    addSpecies: async (parent, args) => {
+      const species = await Species.create(args);
+      return species;
+    },
+    updateSpecies: async (parent, { id, ...args }) => {
+      const species = await Species.findByIdAndUpdate(id, args, { new: true });
+      return species;
+    },
+    deleteSpecies: async (parent, { id }) => {
+      return await Species.findByIdAndDelete(id);
     },
   },
 };
