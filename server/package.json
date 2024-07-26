@@ -6,22 +6,28 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon",
-    "seed": "node config/seeds.js"
+    "seed": "node config/seeds.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.7.2",
+    "apollo-server": "^3.13.0",
     "apollo-server-express": "^3.13.0",
+    "apollo-server-testing": "^2.25.3",
     "bcrypt": "^4.0.1",
     "express": "^4.17.2",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^8.5.1",
+    "mongodb-memory-server": "^10.0.0",
     "mongoose": "^8.0.0",
     "stripe": "^8.67.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "jest": "^29.7.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^7.0.0"
   }
 }

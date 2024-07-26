@@ -17,6 +17,7 @@ const typeDefs = gql`
       lastWatered: String
       location: String
       notes: String
+      scientificName: String!
     ): Plant
     updatePlant(
       id: ID!
@@ -26,6 +27,7 @@ const typeDefs = gql`
       lastWatered: String
       location: String
       notes: String
+      scientificName: String!
     ): Plant
     deletePlant(id: ID!): Plant
   }
@@ -39,6 +41,7 @@ const typeDefs = gql`
   type Plant {
     _id: ID!
     name: String!
+    scientificName: String!
     species: Species!
     age: Int
     lastWatered: String
