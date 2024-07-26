@@ -1,14 +1,19 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 
 const plantSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
+  scientificName: {
+    type: String,
+    required: true,
+  },
   species: {
     type: Schema.Types.ObjectId,
     ref: "Species",
-    required: true,
+    required: false,
   },
   age: {
     type: Number,
