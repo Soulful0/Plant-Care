@@ -12,12 +12,6 @@ pnpm-debug.log*
 # Dependency directories
 jspm_packages/
 
-# dotenv environment variable files
-.env
-.env.test
-.env.production
-.env.development
-
 # OS-specific files
 .DS_Store
 Thumbs.db
