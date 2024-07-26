@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
-import "../App.css"; // Import the App.css where Bulma is included
+import "../App.css";
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +21,10 @@ const Navbar = () => {
   const handleLogInClick = () => {
     setModalContent("login");
     setShowModal(true);
+  };
+
+  const handleLogOut = () => {
+    Auth.logout();
   };
 
   return (
@@ -68,12 +72,20 @@ const Navbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button is-primary" onClick={handleSignUpClick}>
-                  <strong>Sign up</strong>
-                </a>
-                <a className="button is-light" onClick={handleLogInClick}>
-                  Log in
-                </a>
+                {Auth.loggedIn() ? (
+                  <a className="button is-light" onClick={handleLogOut}>
+                    Log Out
+                  </a>
+                ) : (
+                  <>
+                    <a className="button is-primary" onClick={handleSignUpClick}>
+                      <strong>Sign up</strong>
+                    </a>
+                    <a className="button is-light" onClick={handleLogInClick}>
+                      Log in
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           </div>
