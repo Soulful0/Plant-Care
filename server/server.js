@@ -5,6 +5,8 @@ const path = require("path");
 const db = require("./config/connection");
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
+const stripeRoutes = require('./routes/stripe');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 async function startServer() {
@@ -19,6 +21,7 @@ async function startServer() {
   server.applyMiddleware({ app });
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
+  app.use('/api/stripe', stripeRoutes);
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/build")));
   }
