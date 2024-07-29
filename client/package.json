@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.15",
-    "@stripe/stripe-js": "^1.54.0",
+    "@stripe/react-stripe-js": "^2.7.3",
+    "@stripe/stripe-js": "^1.54.2",
     "@testing-library/react": "^14.0.0",
     "bulma": "^1.0.1",
     "graphql": "^16.6.0",
