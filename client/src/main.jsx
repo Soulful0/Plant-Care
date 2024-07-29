@@ -2,19 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
-import ApolloClientProvider from "./apolloClient"; // Ensure correct path to ApolloClientProvider
-import "./App.css"; // Ensure Bulma is imported here
-
+import SearchBar from './components/SearchBar';
+import ApolloClientProvider from "./apolloClient";
+import "./App.css";
+import SavedGuides from './components/SavedGuides';
 const Home = () => (
-  <h1 className="is-flex is-justify-content-center">Home Page</h1>
+  <>
+    <h1 className="title has-text-centered">HOME PAGE</h1>
+    <SearchBar setPlants={setPlants} />
+    <PlantList plants={plants} />
+    <InfoBoxes />
+  </>
 );
-const About = () => (
-  <h1 className="is-flex is-justify-content-center">About Page</h1>
-);
-const Saved = () => (
-  <h1 className="is-flex is-justify-content-center">Saved Guides</h1>
-);
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,17 +25,20 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/saved",
-        element: <Saved />,
+        path: "about",
+        element: (
+          <>
+            <h1 className="is-flex is-justify-content-center">About Page</h1>
+          </>
+        ),
       },
     ],
   },
+  {
+    path: "/saved-guides",
+    element: <SavedGuides />,
+  },
 ]);
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ApolloClientProvider>
     <RouterProvider router={router} />
