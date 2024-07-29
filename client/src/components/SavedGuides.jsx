@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import Navbar from './Navbar'; // Ensure Navbar is imported
-import { GET_ME } from '../utils/queries'; // Ensure QUERY_ME is correctly defined
-import { REMOVE_PLANT, UPDATE_PLANT_NOTE } from '../utils/mutations'; // Ensure mutations are imported
-import placeholderImage from '../assets/placeholder.jpg'; // Import placeholder image
+import Navbar from './Navbar';
+import { GET_ME } from '../utils/queries';
+import { REMOVE_PLANT, UPDATE_PLANT_NOTE } from '../utils/mutations';
+import placeholderImage from '../assets/placeholder.jpg';
 
 const SavedGuides = () => {
   const { loading, data, error } = useQuery(GET_ME);
@@ -54,6 +54,20 @@ const SavedGuides = () => {
     } catch (e) {
       console.error('Error updating note:', e);
       alert('Failed to update note.');
+    }
+  };
+
+  const handleRemoveNote = async (plantId) => {
+    try {
+      const { data } = await updatePlantNote({
+        variables: { plantId, note: '' }
+      });
+      const updatedPlant = data.updatePlantNote;
+      setSavedPlants(savedPlants.map(plant => plant._id === plantId ? updatedPlant : plant));
+      alert('Note removed!');
+    } catch (e) {
+      console.error('Error removing note:', e);
+      alert('Failed to remove note.');
     }
   };
 
@@ -142,12 +156,21 @@ const SavedGuides = () => {
                         Edit Note
                       </button>
                     )}
+                    {plant.note && (
+                      <button 
+                        className="button is-warning mt-2" 
+                        onClick={() => handleRemoveNote(plant._id)}
+                        style={{ width: '100%' }}
+                      >
+                        Remove Note
+                      </button>
+                    )}
                     <button 
                       className="button is-danger mt-2" 
                       onClick={() => handleRemove(plant._id)}
                       style={{ width: '100%' }}
                     >
-                      Remove
+                      Remove Plant
                     </button>
                   </div>
                 </div>

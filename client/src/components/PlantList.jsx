@@ -3,14 +3,17 @@ import { useMutation } from '@apollo/client';
 import { SAVE_PLANT } from '../utils/mutations';
 import Auth from '../utils/auth';
 import placeholderImage from '../assets/placeholder.jpg';
+
 const PlantList = ({ plants }) => {
   const loggedIn = Auth.loggedIn();
   const [savePlant] = useMutation(SAVE_PLANT);
+
   const handleSave = async (plant) => {
     if (!loggedIn) {
       alert('Please log in to save plants.');
       return;
     }
+
     try {
       await savePlant({
         variables: {
@@ -28,6 +31,7 @@ const PlantList = ({ plants }) => {
       alert('Failed to save plant.');
     }
   };
+
   return (
     <div className="columns is-multiline">
       {plants.length === 0 ? (
@@ -35,8 +39,8 @@ const PlantList = ({ plants }) => {
       ) : (
         plants.map((plant) => (
           <div key={plant.id} className="column is-one-quarter">
-            <div
-              className="card plant-card"
+            <div 
+              className="card plant-card" 
               style={{ position: 'relative', overflow: 'hidden', transition: 'transform 0.3s' }}
               onMouseEnter={(e) => {
                 e.currentTarget.querySelector('.image-container').style.opacity = '0';
@@ -70,17 +74,17 @@ const PlantList = ({ plants }) => {
                   </div>
                 </div>
               </div>
-              <div
-                className="plant-details"
-                style={{
-                  opacity: 0,
-                  transition: 'opacity 0.3s',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: 'rgba(255, 255, 255, 0.9)',
+              <div 
+                className="plant-details" 
+                style={{ 
+                  opacity: 0, 
+                  transition: 'opacity 0.3s', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  right: 0, 
+                  bottom: 0, 
+                  background: 'rgba(255, 255, 255, 0.9)', 
                   padding: '10px',
                   display: 'flex',
                   alignItems: 'center',
@@ -114,4 +118,5 @@ const PlantList = ({ plants }) => {
     </div>
   );
 };
+
 export default PlantList;
