@@ -1,42 +1,37 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "../utils/mutations";
+import { SIGNUP_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
-const SignupForm = ({ handleModalClose }) => {
-  const [userFormData, setUserFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
+const Signup = () => {
+  const [formState, setFormState] = useState({ username: '', email: '', password: '' });
   const [showAlert, setShowAlert] = useState(false);
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [signup, { error }] = useMutation(SIGNUP_USER);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    setFormState({ ...formState, [name]: value });
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await addUser({
-        variables: { ...userFormData },
+      const { data } = await signup({
+        variables: { ...formState },
       });
       console.log("Signup successful:", data);
-      Auth.login(data.addUser.token);
-      handleModalClose();
+      Auth.login(data.signup.token);
     } catch (err) {
       console.error("Signup error details:", err);
       setShowAlert(true);
     }
-    setUserFormData({
+    setFormState({
       username: "",
       email: "",
       password: "",
     });
   };
-  
+
   return (
     <>
       <form noValidate onSubmit={handleFormSubmit}>
@@ -60,7 +55,7 @@ const SignupForm = ({ handleModalClose }) => {
               placeholder="Your username"
               name="username"
               onChange={handleInputChange}
-              value={userFormData.username}
+              value={formState.username}
               required
             />
           </div>
@@ -77,7 +72,7 @@ const SignupForm = ({ handleModalClose }) => {
               placeholder="Your email address"
               name="email"
               onChange={handleInputChange}
-              value={userFormData.email}
+              value={formState.email}
               required
             />
           </div>
@@ -94,7 +89,7 @@ const SignupForm = ({ handleModalClose }) => {
               placeholder="Your password"
               name="password"
               onChange={handleInputChange}
-              value={userFormData.password}
+              value={formState.password}
               required
             />
           </div>
@@ -106,11 +101,7 @@ const SignupForm = ({ handleModalClose }) => {
               className="button is-primary"
               type="submit"
               disabled={
-                !(
-                  userFormData.username &&
-                  userFormData.email &&
-                  userFormData.password
-                )
+                !(formState.username && formState.email && formState.password)
               }
             >
               Submit
@@ -122,4 +113,4 @@ const SignupForm = ({ handleModalClose }) => {
   );
 };
 
-export default SignupForm;
+export default Signup;
