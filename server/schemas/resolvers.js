@@ -1,55 +1,73 @@
-const { AuthenticationError } = require("apollo-server-express");
-const { User, Plant, Species } = require("../models");
-const { signToken } = require("../utils/auth");
+const { AuthenticationError } = require('apollo-server-express');
+const { User, Plant } = require('../models');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findById(context.user._id);
+        return User.findOne({ _id: context.user._id }).populate('savedPlants');
       }
-      throw new AuthenticationError("Not logged in");
-    },
-    plants: async () => {
-      return Plant.find().populate("species");
-    },
-    plant: async (parent, { id }) => {
-      return Plant.findById(id).populate("species");
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
-
   Mutation: {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-      if (!user) {
-        throw new AuthenticationError("Incorrect credentials");
-      }
-      const correctPw = await user.isCorrectPassword(password);
-      if (!correctPw) {
-        throw new AuthenticationError("Incorrect credentials");
-      }
-      const token = signToken(user);
-      console.log('Generated token:', token);
-      return { token, user };
-    },
 
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
+      if (!user) {
+        throw new AuthenticationError('No user found with this email address');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+    signup: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
       const token = signToken(user);
       return { token, user };
     },
-    addPlant: async (parent, args) => {
-      return Plant.create(args);
+    savePlant: async (parent, { common_name, scientific_name, sunlight, watering, cycle, default_image }, context) => {
+      if (context.user) {
+        const plant = await Plant.create({ common_name, scientific_name, sunlight, watering, cycle, default_image });
+        
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedPlants: plant._id } },
+          { new: true }
+        ).populate('savedPlants');
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
-    updatePlant: async (parent, { id, ...args }) => {
-      return Plant.findByIdAndUpdate(id, args, { new: true }).populate(
-        "species"
-      );
+    removePlant: async (parent, { plantId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedPlants: plantId } },
+          { new: true }
+        ).populate('savedPlants');
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
-    deletePlant: async (parent, { id }) => {
-      return Plant.findByIdAndRemove(id);
-    },
-  },
+    updatePlantNote: async (parent, { plantId, note }, context) => {
+      if (context.user) {
+        const plant = await Plant.findOneAndUpdate(
+          { _id: plantId },
+          { note: note },
+          { new: true }
+        );
+        return plant;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    }
+  }
 };
 
 module.exports = resolvers;
