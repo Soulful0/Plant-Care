@@ -19,9 +19,14 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  savedPlants: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Plant',
+    },
+  ],
 });
 
-// Set up pre-save middleware to hash the password before saving
 userSchema.pre('save', async function(next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
@@ -30,7 +35,6 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-// Compare the incoming password with the hashed password
 userSchema.methods.isCorrectPassword = async function(password) {
   return bcrypt.compare(password, this.password);
 };
