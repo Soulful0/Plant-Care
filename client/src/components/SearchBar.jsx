@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { fetchPlants } from '../utils/API';
-import placeholderImage from '../assets/placeholder.jpg';
+
 const SearchBar = ({ setPlants }) => {
   const [query, setQuery] = useState('');
   const handleSearch = async () => {
     const data = await fetchPlants(query);
     setPlants(data.data);
   };
+
   return (
     <div className="field has-addons has-addons-centered" style={{ marginTop: '20px' }}>
       <div className="control is-expanded" style={{ maxWidth: '850px' }}>
@@ -31,4 +32,5 @@ const SearchBar = ({ setPlants }) => {
     </div>
   );
 };
+
 export default SearchBar;
