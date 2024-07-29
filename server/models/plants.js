@@ -1,38 +1,35 @@
-const mongoose = require("mongoose");
-const { Schema, model } = mongoose;
+const { Schema, model } = require('mongoose');
 
 const plantSchema = new Schema({
-  name: {
+  common_name: {
     type: String,
-    required: true,
+    required: true
   },
-  scientificName: {
+  scientific_name: {
     type: String,
-    required: true,
+    required: true
   },
-  species: {
-    type: Schema.Types.ObjectId,
-    ref: "Species",
-    required: false,
+  sunlight: {
+    type: [String],
+    required: true
   },
-  age: {
-    type: Number,
-    required: false,
-  },
-  lastWatered: {
-    type: Date,
-    required: false,
-  },
-  location: {
+  watering: {
     type: String,
-    required: false,
+    required: true
   },
-  notes: {
+  cycle: {
     type: String,
-    required: false,
+    required: true
   },
+  default_image: {
+    type: String,
+    required: true
+  },
+  note: {
+    type: String
+  }
 });
 
-const Plant = model("Plant", plantSchema);
+const Plant = model('Plant', plantSchema);
 
 module.exports = Plant;
