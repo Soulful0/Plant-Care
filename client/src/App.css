@@ -17,3 +17,9 @@ h6 {
   font-weight: 300;
   font-style: italic;
 }
+
+.burger-navbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
