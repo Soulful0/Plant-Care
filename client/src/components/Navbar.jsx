@@ -8,6 +8,7 @@ import "../App.css";
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("signup");
+  const [isActive, setIsActive] = useState(false); // State to manage hamburger menu
   const navigate = useNavigate();
 
   const handleModalClose = () => {
@@ -31,23 +32,32 @@ const Navbar = () => {
 
   const handleSavedGuidesClick = () => {
     if (!Auth.loggedIn()) {
-      alert('Please log in to view your saved guides.');
-      navigate('/login');
+      alert("Please log in to view your saved guides.");
+      navigate("/login");
       return;
     }
-    navigate('/saved-guides');
+    navigate("/saved-guides");
+  };
+
+  const toggleHamburger = () => {
+    setIsActive(!isActive);
   };
 
   return (
     <>
-      <nav className="navbar p-3" role="navigation" aria-label="main navigation">
+      <nav
+        className="navbar p-3"
+        role="navigation"
+        aria-label="main navigation"
+      >
         <div className="navbar-brand">
           <a
             role="button"
-            className="navbar-burger"
+            className={`navbar-burger ${isActive ? "is-active" : ""}`}
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
+            onClick={toggleHamburger}
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -55,36 +65,49 @@ const Navbar = () => {
             <span aria-hidden="true"></span>
           </a>
         </div>
-        <div id="navbarBasicExample" className="navbar-menu">
+        <div
+          id="navbarBasicExample"
+          className={`navbar-menu ${isActive ? "is-active" : ""}`}
+        >
           <div className="navbar-start">
-            <Link className="navbar-item" to="/">
+            <Link
+              className="navbar-item is-flex is-justify-content-flex-end"
+              to="/"
+            >
               Home
             </Link>
-            <div className="navbar-item has-dropdown is-hoverable">
-              <a className="navbar-link">More</a>
-              <div className="navbar-dropdown">
-                <a className="navbar-item" onClick={handleSavedGuidesClick}>
-                  Saved Guides
-                </a>
-                <Link className="navbar-item" to="/donate">
-                  Donate
-                </Link>
-                <a className="navbar-item" href="https://perenual.com">
-                  Perenual
-                </a>
-              </div>
-            </div>
+            <a
+              className="navbar-item is-flex is-justify-content-flex-end"
+              onClick={handleSavedGuidesClick}
+            >
+              Saved Guides
+            </a>
+            <Link
+              className="navbar-item is-flex is-justify-content-flex-end"
+              to="/donate"
+            >
+              Donate
+            </Link>
+            <a
+              className="navbar-item is-flex is-justify-content-flex-end"
+              href="https://perenual.com"
+            >
+              Perenual
+            </a>
           </div>
           <div className="navbar-end">
             <div className="navbar-item">
-              <div className="buttons">
+              <div className="buttons is-justify-content-flex-end">
                 {Auth.loggedIn() ? (
                   <a className="button is-light" onClick={handleLogOut}>
                     Log Out
                   </a>
                 ) : (
                   <>
-                    <a className="button is-primary" onClick={handleSignUpClick}>
+                    <a
+                      className="button is-primary"
+                      onClick={handleSignUpClick}
+                    >
                       <strong>Sign up</strong>
                     </a>
                     <a className="button is-light" onClick={handleLogInClick}>

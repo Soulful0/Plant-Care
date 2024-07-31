@@ -80,7 +80,15 @@ const SavedGuides = () => {
     <div>
       <Navbar />
       <div className="container">
-        <h1 className="title">Saved Guides</h1>
+        <h1
+          className="title"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          Saved Guides
+        </h1>
         <div className="columns is-multiline">
           {savedPlants.length > 0 ? (
             savedPlants.map((plant) => (
@@ -222,7 +230,14 @@ const SavedGuides = () => {
               </div>
             ))
           ) : (
-            <p>No saved plants yet.</p>
+            <p
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              No saved plants yet.
+            </p>
           )}
         </div>
       </div>
