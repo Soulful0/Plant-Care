@@ -10,7 +10,7 @@ import Navbar from "./Navbar";
 
 const stripePromise = loadStripe(
   "pk_test_51PhmG6KJnmfwHZaJWxwjOVKJW0dnasyiP2SZo0EJYhvTIm1b3zw4IXEwkY6WFziHS3dwXLNYdpVzZWpSLyycEt7400S3gsrXbF"
-); // Use your Stripe publishable key
+);
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -77,7 +77,7 @@ const DonateForm = () => {
   };
 
   return (
-    <>
+    <div style={{ backgroundColor: '#85c88a', minHeight: '100vh' }}>
       <Navbar />
       <div className="container">
         <h1
@@ -85,6 +85,8 @@ const DonateForm = () => {
           style={{
             display: "flex",
             justifyContent: "center",
+            marginTop: "30px",
+            color: "#000"
           }}
         >
           Donate
@@ -98,8 +100,14 @@ const DonateForm = () => {
           </div>
           <button
             type="submit"
-            className="button is-primary"
+            className="button"
             disabled={!stripe || loading}
+            style={{
+              backgroundColor: '#85c88a',
+              color: 'black',
+              width: '100%',
+              fontWeight: 'bold',
+            }}
           >
             {loading ? "Processing..." : "Donate $50"}
           </button>
@@ -111,7 +119,7 @@ const DonateForm = () => {
           )}
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

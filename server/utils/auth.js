@@ -16,7 +16,6 @@ module.exports = {
     }
 
     if (!token) {
-      console.log('No token provided');
       return req;
     }
 
@@ -31,3 +30,4 @@ module.exports = {
     return req;
   },
 };
+
