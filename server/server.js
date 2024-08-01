@@ -8,6 +8,7 @@ const { authMiddleware } = require("./utils/auth");
 const stripeRoutes = require("./routes/stripe");
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 mongoose
   .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/plantDB", {
     useNewUrlParser: true,
@@ -19,6 +20,14 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
   });
+
+  // Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
 async function startServer() {
   const server = new ApolloServer({
     typeDefs,
@@ -31,10 +40,10 @@ async function startServer() {
   app.use(express.json());
   app.use("/api/stripe", stripeRoutes);
   if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../client/build")));
+    app.use(express.static(path.join(__dirname, "../client/dist")));
   }
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}`);
