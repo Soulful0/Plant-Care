@@ -77,7 +77,7 @@ const SavedGuides = () => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#85c88a', minHeight: '100vh' }}>
       <Navbar />
       <div className="container">
         <h1
@@ -85,6 +85,8 @@ const SavedGuides = () => {
           style={{
             display: "flex",
             justifyContent: "center",
+            marginTop: "30px",
+            color: "#000"
           }}
         >
           Saved Guides

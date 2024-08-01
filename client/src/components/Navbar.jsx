@@ -4,11 +4,12 @@ import Auth from "../utils/auth";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 import "../App.css";
+import navbarpic from '../assets/navbarpic.jpg';
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("signup");
-  const [isActive, setIsActive] = useState(false); // State to manage hamburger menu
+  const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
 
   const handleModalClose = () => {
@@ -43,12 +44,30 @@ const Navbar = () => {
     setIsActive(!isActive);
   };
 
+  const hoverStyle = {
+    backgroundColor: '#85c88a',
+    color: 'white',
+  };
+
+  const hamburgerStyle = {
+    color: 'white',
+  };
+
+  const mobileMenuStyle = {
+    backgroundColor: isActive ? 'transparent' : '', 
+  };
+
   return (
     <>
       <nav
         className="navbar p-3"
         role="navigation"
         aria-label="main navigation"
+        style={{
+          backgroundImage: `url(${navbarpic})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         <div className="navbar-brand">
           <a
@@ -58,6 +77,7 @@ const Navbar = () => {
             aria-expanded="false"
             data-target="navbarBasicExample"
             onClick={toggleHamburger}
+            style={hamburgerStyle}
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -68,29 +88,42 @@ const Navbar = () => {
         <div
           id="navbarBasicExample"
           className={`navbar-menu ${isActive ? "is-active" : ""}`}
+          style={mobileMenuStyle}
         >
           <div className="navbar-start">
             <Link
-              className="navbar-item is-flex is-justify-content-flex-end"
+              className="navbar-item is-flex is-justify-content-flex-end has-text-white"
               to="/"
+              style={{ transition: 'background-color 0.3s' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hoverStyle.backgroundColor}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ''}
             >
               Home
             </Link>
             <a
-              className="navbar-item is-flex is-justify-content-flex-end"
+              className="navbar-item is-flex is-justify-content-flex-end has-text-white"
               onClick={handleSavedGuidesClick}
+              style={{ transition: 'background-color 0.3s' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hoverStyle.backgroundColor}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ''}
             >
               Saved Guides
             </a>
             <Link
-              className="navbar-item is-flex is-justify-content-flex-end"
+              className="navbar-item is-flex is-justify-content-flex-end has-text-white"
               to="/donate"
+              style={{ transition: 'background-color 0.3s' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hoverStyle.backgroundColor}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ''}
             >
               Donate
             </Link>
             <a
-              className="navbar-item is-flex is-justify-content-flex-end"
+              className="navbar-item is-flex is-justify-content-flex-end has-text-white"
               href="https://perenual.com"
+              style={{ transition: 'background-color 0.3s' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = hoverStyle.backgroundColor}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ''}
             >
               Perenual
             </a>
@@ -99,18 +132,29 @@ const Navbar = () => {
             <div className="navbar-item">
               <div className="buttons is-justify-content-flex-end">
                 {Auth.loggedIn() ? (
-                  <a className="button is-light" onClick={handleLogOut}>
+                  <a className="button" onClick={handleLogOut} style={hoverStyle}>
                     Log Out
                   </a>
                 ) : (
                   <>
                     <a
-                      className="button is-primary"
+                      className="button"
                       onClick={handleSignUpClick}
+                      style={{
+                        backgroundColor: '#85c88a',
+                        color: 'white',
+                      }}
                     >
                       <strong>Sign up</strong>
                     </a>
-                    <a className="button is-light" onClick={handleLogInClick}>
+                    <a
+                      className="button is-light"
+                      onClick={handleLogInClick}
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '1rem',
+                      }}
+                    >
                       Log in
                     </a>
                   </>

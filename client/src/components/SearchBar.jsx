@@ -8,6 +8,11 @@ const SearchBar = ({ setPlants }) => {
     setPlants(data.data);
   };
 
+  const buttonStyle = {
+    backgroundColor: '#000',
+    color: 'white',
+  };
+
   return (
     <div className="field has-addons has-addons-centered" style={{ marginTop: '20px' }}>
       <div className="control is-expanded" style={{ maxWidth: '850px' }}>
@@ -22,9 +27,9 @@ const SearchBar = ({ setPlants }) => {
       </div>
       <div className="control">
         <button
-          className="button is-primary"
+          className="button"
           onClick={handleSearch}
-          style={{ fontSize: '1rem', height: '2.5rem' }}
+          style={{ ...buttonStyle, fontSize: '1rem', height: '2.5rem' }}
         >
           Search
         </button>

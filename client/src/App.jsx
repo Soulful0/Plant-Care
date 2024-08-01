@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "bulma/css/bulma.min.css"; // Ensure only default Bulma CSS is imported
+import "bulma/css/bulma.min.css";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import InfoBoxes from "./components/infoBoxes";
@@ -10,7 +10,7 @@ const App = () => {
   const [plants, setPlants] = useState([]);
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#85c88a', minHeight: '100vh' }}>
       <Navbar />
       <div className="container mt-5">
         <Routes>
@@ -18,7 +18,7 @@ const App = () => {
             path="/"
             element={
               <>
-                <h1 className="title has-text-centered">HOME PAGE</h1>
+                <h1 className="title has-text-centered" style={{color: '#000'}}>HOME PAGE</h1>
                 <SearchBar setPlants={setPlants} />
                 <PlantList plants={plants} />
                 <InfoBoxes />

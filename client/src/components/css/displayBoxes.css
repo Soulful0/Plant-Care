@@ -1,0 +1,31 @@
+.main-left, .main-mid, .main-right {
+    color: white;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    height: 100%;
+  }
+  
+  .main-left {
+    background-image: url('../../assets/mainleft.jpg');
+  }
+  
+  .main-mid {
+    background-image: url('../../assets/mainmid.jpg');
+  }
+  
+  .main-right {
+    background-image: url('../../assets/mainright.jpg');
+  }
+  
+  .content-list {
+    text-align: left;
+    margin-top: 10px;
+  }
+  
+  .icon {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
