@@ -8,9 +8,8 @@ import {
 } from "@stripe/react-stripe-js";
 import Navbar from "./Navbar";
 
-const stripePromise = loadStripe(
-  "pk_test_51PhmG6KJnmfwHZaJWxwjOVKJW0dnasyiP2SZo0EJYhvTIm1b3zw4IXEwkY6WFziHS3dwXLNYdpVzZWpSLyycEt7400S3gsrXbF"
-);
+// Load the Stripe API key from environment variables
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
