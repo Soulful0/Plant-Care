@@ -56,5 +56,5 @@ The Plant Care website is a MERN (MongoDB, Express.js, React.js, Node.js) SPA (S
 Tyler Alberts: t.23carocci@yahoo.com
 Joel Azeta: ajfizzle310@outlook.com
 Alanna Johnson-garza: ajgarza27@gmail.com
-Josh Gingold: josh.gingold@gmail.com
+Josh Gingold: joshgingold336@gmail.com
 Frank Vasquez: frank.vasquez.school@gmail.com
